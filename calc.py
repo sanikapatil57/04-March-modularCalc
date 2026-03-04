@@ -20,12 +20,24 @@ class Calculator:
         return self.first_number / self.second_number
 
 
+# Advanced calculator using inheritance
+class AdvancedCalculator(Calculator):
+
+    def power(self):
+        return self.first_number ** self.second_number
+
+    def square_root(self):
+        if self.first_number < 0:
+            return "Error: Cannot calculate square root of a negative number."
+        return self.first_number ** 0.5
+
+
 def main():
 
     while True:
 
-        print("\nSimple Calculator")
-        print("Press 'Q' to quit or press ENTER to continue")
+        print("\nCalculator")
+        print("Operations: +  -  *  /  ^  sqrt")
 
         choice = input("Q => Quit or press ENTER to continue: ")
 
@@ -34,10 +46,14 @@ def main():
             break
 
         first_number = float(input("Enter the first number: "))
-        operation = input("Enter the operation (+, -, *, /): ")
-        second_number = float(input("Enter the second number: "))
+        operation = input("Enter the operation (+, -, *, /, ^, sqrt): ")
+        operation = operation.lower()
+        if operation != "sqrt":
+            second_number = float(input("Enter the second number: "))
+        else:
+            second_number = None
 
-        calculator = Calculator(first_number, operation, second_number)
+        calculator = AdvancedCalculator(first_number, operation, second_number)
 
         if calculator.operation == '+':
             result = calculator.add()
@@ -50,6 +66,12 @@ def main():
 
         elif calculator.operation == '/':
             result = calculator.divide()
+        
+        elif calculator.operation == '^':
+            result = calculator.power()
+
+        elif calculator.operation == 'sqrt':
+            result = calculator.square_root()
 
         else:
             result = "Error: Invalid operation."
